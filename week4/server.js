@@ -194,7 +194,7 @@ const requestListener = async (req, res) => {
         console.log(skillRepo);
         const existSkill = await skillRepo.find({
           where: {
-            name: data.name
+            name: data.name.replace(/\s/g, "")
           }
         })
         // console.log(existSkill);

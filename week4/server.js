@@ -64,6 +64,9 @@ const requestListener = async (req, res) => {
         // }
         // 解構寫法
         const { name, credit_amount, price } = JSON.parse(body)
+        // console.log(name)
+        // console.log(name.replace(/\s/g, ""));
+
         if (isUndefined(name) || isNotValidString(name) ||
           isUndefined(credit_amount) || isNotValidInteger(credit_amount) ||
           isUndefined(price) || isNotValidInteger(price)) {
@@ -77,11 +80,14 @@ const requestListener = async (req, res) => {
         }
 
         const creditPackageRepo = await AppDataSource.getRepository("CreditPackage")
+
         const existPackage = await creditPackageRepo.find({
           where: {
-            name: name
+            // 正則表達式 /\s/g 會匹配字串中所有的空白字符
+            name: name.replace(/\s/g, "")
           }
         })
+        console.log(existPackage)
         if (existPackage.length > 0) {
           res.writeHead(409, headers)
           res.write(JSON.stringify({

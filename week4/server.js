@@ -83,6 +83,7 @@ const requestListener = async (req, res) => {
 
         const existPackage = await creditPackageRepo.find({
           where: {
+            // 考慮輸入有空白鍵的情形
             // 正則表達式 /\s/g 會匹配字串中所有的空白字符
             name: name.replace(/\s/g, "")
           }
@@ -194,6 +195,7 @@ const requestListener = async (req, res) => {
         console.log(skillRepo);
         const existSkill = await skillRepo.find({
           where: {
+            // 考慮輸入有空白鍵的情形
             name: data.name.replace(/\s/g, "")
           }
         })

@@ -80,7 +80,6 @@ const requestListener = async (req, res) => {
         }
 
         const creditPackageRepo = await AppDataSource.getRepository("CreditPackage")
-
         const existPackage = await creditPackageRepo.find({
           where: {
             // 考慮輸入有空白鍵的情形
@@ -133,6 +132,7 @@ const requestListener = async (req, res) => {
         return
       }
       const result = await AppDataSource.getRepository("CreditPackage").delete(packageId)
+      // console.log(result)
       if (result.affected === 0) {
         res.writeHead(400, headers)
         res.write(JSON.stringify({
@@ -192,7 +192,7 @@ const requestListener = async (req, res) => {
           return
         }
         const skillRepo = await AppDataSource.getRepository("Skill")
-        console.log(skillRepo);
+        // console.log(skillRepo);
         const existSkill = await skillRepo.find({
           where: {
             // 考慮輸入有空白鍵的情形
@@ -210,9 +210,7 @@ const requestListener = async (req, res) => {
           return
         }
         const newSkill = await skillRepo.create({
-          name: data.name,
-          credit_amount: data.credit_amount,
-          price: data.price
+          name: data.name
         })
         const result = await skillRepo.save(newSkill)
         res.writeHead(200, headers)
